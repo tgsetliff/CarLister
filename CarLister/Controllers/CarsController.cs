@@ -22,11 +22,6 @@ namespace CarLister.Controllers
         {            
             db = HttpContext.Current.GetOwinContext().Get<SqlConnection>().As<ICarsAccess>();
         }
-        [HttpGet, Route("getCars")]
-        public IHttpActionResult GetCars()
-        {
-            return Ok("Its a car");
-        }
 
         [HttpGet, HttpPost, Route("getYears")]
         public async Task<IHttpActionResult> GetYears()
@@ -35,27 +30,50 @@ namespace CarLister.Controllers
         }
 
         [HttpGet, HttpPost, Route("getMakes")]
-        public async Task<IHttpActionResult> GetMakes(int year)
+        public async Task<IHttpActionResult> GetMakes(string year)
         {
             return Ok(await db.GetMakes(year));
         }
 
         [HttpGet, HttpPost, Route("getModels")]
-        public async Task<IHttpActionResult> GetModels(int year, string make)
+        public async Task<IHttpActionResult> GetModels(string year, string make)
         {
             return Ok(await db.GetModels(year, make));
         }
 
         [HttpGet, HttpPost, Route("getTrims")]
-        public async Task<IHttpActionResult> GetTrims(int year, string make, string model)
+        public async Task<IHttpActionResult> GetTrims(string year, string make, string model)
         {
             return Ok(await db.GetTrims(year, make, model));
         }
 
         [HttpGet, HttpPost, Route("getCars")]
-        public async Task<IHttpActionResult> GetCars(int year, string make = null, string model = null, string trim = null)
+        public async Task<IHttpActionResult> GetCars(string year, string make, string model, string trim)
         {
             return Ok(await db.GetCars(year, make, model, trim));
+        }
+
+        [HttpGet, HttpPost, Route("getRecalls")]
+        public async Task<IHttpActionResult> getRecalls(string year, string make, string model)
+        {
+            HttpResponseMessage response;
+            string content = "";
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://www.nhtsa.gov/");
+                try
+                {
+                    response = await client.GetAsync("webapi/api/recalls/vehicle/modelyear/" + year + "/make/" + make + "/model/" + model + "?format=json");
+                    content = await response.Content.ReadAsStringAsync();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+            }
+            return Ok(content);
+
         }
     }
 }

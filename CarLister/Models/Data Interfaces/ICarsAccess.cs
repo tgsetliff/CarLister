@@ -9,9 +9,9 @@ namespace CarLister.Models.Data_Interfaces
     public interface ICarsAccess
     {
         Task<List<string>> GetYears();
-        Task<List<string>> GetMakes(int year);
-        Task<List<string>> GetModels(int year, string make);
-        Task<List<string>> GetTrims(int year, string make, string model);
-        Task<List<Car>> GetCars(int year, string make, string model, string trim);
+        Task<List<string>> GetMakes(string year);
+        Task<List<string>> GetModels(string year, string make);
+        Task<List<string>> GetTrims(string year, string make, string model);
+        Task<List<Car>> GetCars(string year, string make, string model, string trim);
     }
 }
