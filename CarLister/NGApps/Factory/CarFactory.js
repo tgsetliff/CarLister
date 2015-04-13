@@ -40,12 +40,13 @@
                 .then(function (response) { return response.data });
         };
 
-        factory.getRecall = function (year, make, model) {
+        carFactory.getRecall = function (year, make, model) {
             var options = { params: { year: year, make: make, model: model } }
 
-            return $http.get('api/cars/getRecalls',options)
-                .then(function (response) {return response.data});
+            return $http.get('api/cars/getRecall',options)
+                .then(function (response) {return JSON.parse(response.data)});
         }
+
         return carFactory;
     }]);
 

@@ -2,21 +2,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <link href="Content/Site.css" rel="stylesheet" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />    
+    <link href="Content/Site.css" rel="stylesheet" />
 
 </head>
-<body ng-app="cars">    
-        <div class="col-md-12">
-            <div class="row">
-                <div class="text-center">
-                    <h2>Car Search</h2>
+<body ng-app="cars">
+    <div id="wrapper">
+        <div class="container" ng-controller="CarsController">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul  class="nav navbar-nav side-nav">
+                    <li><a href="/Help">Help</a></li>
+                </ul>
+            </div>
+        </nav>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="text-center">
+                        <h2>Car Search</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="container" ng-controller="CarsController">
+            <div class="row">
+
                 <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>Year</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Make</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Model</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Trim</h4>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-3">
                             <select ng-model="selectedYear" ng-options="year for year in years" ng-change="getMakes()" class="form-control"></select>
@@ -31,28 +62,73 @@
                             <select ng-model="selectedTrim" ng-options="trim for trim in trims" ng-change="getCars()" class="form-control"></select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <ol>
-                                        <li ng-repeat="car in cars">
-                                            {{car.year}} , {{car.make}} , {{car.model}} , {{car.trim}}
-                                        </li>
-                                    </ol>
-                                </div>
+
+                    <div class="row">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-3">Year</th>
+                                            <th class="col-md-3">Make</th>
+                                            <th class="col-md-3">Model</th>
+                                            <th class="col-md-3">Trim</th>
+                                            <!--<th class="col-md-2"></th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="car in cars">
+                                            <td class="col-md-3">{{ car.year }}</td>
+                                            <td class="col-md-3">{{ car.make | uppercase}}</td>
+                                            <td class="col-md-3">{{ car.model | uppercase}}</td>
+                                            <td class="col-md-3">{{ car.trim | uppercase}}</td>
+                                            <!--<td class="col-md-2"><btn class="btn btn-success btn-xs pull-right" ng-click="getRecall">Details</btn></td>-->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!--<div class="row" ng-repeat="car in cars">
+                                    <div class="col-md-3">{{ car.year }}</div>
+                                    <div class="col-md-3">{{ car.make }}</div>
+                                    <div class="col-md-3">{{ car.model }}</div>
+                                    <div class="col-md-3">{{ car.trim }}</div>
+                                    <btn class="btn btn-success btn-xs pull-right" ng-click="getRecall()">Details</btn>
+                                    <div ng-repeat="recall in recalls.Results">
+                                        Component:{{recall.Summary}}, Conequence{{recall.Conequence}}
+                                    </div>
+                                    
+                                    <br />
+                                </div>-->
+                                <btn class="btn btn-success btn-xs pull-right" ng-click="getRecall()">Recall Data</btn>
                             </div>
+                             <div class="panel-footer" ng-repeat="recall in recalls.Results">
+                                 <div ng-if="{{recall.Count}} == '0'">
+                                     No Recall Data Found
+                                 </div> 
+                                <div class="row">
+                                    <b>Component: </b>{{recall.Component}}
+                                </div>
+                                <div class="row">
+                                    <b>Summary: </b>{{recall.Summary}}
+                                </div>
+                                <div class="row">
+                                    <b>Consequence: </b>{{recall.Conequence}}
+                                </div>
+                                <div class="row">
+                                    <b>Remedy: </b>{{recall.Remedy}}
+                                </div>
+                            </div>                                
                         </div>
                     </div>
-                    
-                </div>                    
+                </div>
             </div>
         </div>
-
-
+        <!--<div class="footer"> 
+            <div class="container">
+                <p>&copy;  - Car Search by Tom Setliff</p>
+            </div>            
+        </div>-->
+    </div>
+    
     <script src="Scripts/jquery-2.1.3.min.js"></script>
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
@@ -60,7 +136,7 @@
     <script src="NGApps/Module/CarsApp.js"></script>
     <script src="NGApps/Factory/CarFactory.js"></script>
     <script src="NGApps/Controller/CarsController.js"></script>
-       
+
 </body>
 
 </html>

@@ -53,8 +53,8 @@ namespace CarLister.Controllers
             return Ok(await db.GetCars(year, make, model, trim));
         }
 
-        [HttpGet, HttpPost, Route("getRecalls")]
-        public async Task<IHttpActionResult> getRecalls(string year, string make, string model)
+        [HttpGet, HttpPost, Route("getRecall")]
+        public async Task<IHttpActionResult> getRecall(string year, string make, string model)
         {
             HttpResponseMessage response;
             string content = "";
