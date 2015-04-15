@@ -1,6 +1,9 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url('/Images/cars.jpg');
+    background-repeat:no-repeat;
+    background-size:1600px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,14 +24,14 @@ textarea {
 }
 table {
   max-width: 100%;
-  background-color: lightblue;
+  background-color: white;
 }
 th {
   text-align: left;
 }
 .table {
-  width: 800px;
-  margin-bottom: 20px;
+  /*width: 800px;*/
+  margin-bottom: 10px;
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,
@@ -37,13 +40,14 @@ th {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   padding: 8px;
+  width: 100px;
   line-height: 1.42857143;
   vertical-align: top;
   border-top: 1px solid #282828;
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #282828;
+  border-bottom: 1px solid #282828;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
@@ -221,6 +225,15 @@ table th[class*="col-"] {
 .animate-if.ng-enter.ng-enter-active {
   opacity:1;
 }
+.panel {
+  margin-top:20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
 .panel-heading {
     padding: 20px 15px;
     margin-top: 10px;
@@ -230,9 +243,9 @@ table th[class*="col-"] {
     background-color: lightblue;
 }
 .panel-body{
-    margin-top:20px;
-    border: 1px solid blue;
-    background-color: lightblue;
+    margin-top:0px;
+    border: 1px solid rgb(232, 217, 186);
+    background-color: rgb(241, 226, 195);
            }
 .footer {
 	width:100%;

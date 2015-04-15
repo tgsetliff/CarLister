@@ -31,4 +31,11 @@ namespace CarLister.Models
         public string wheelbase { get; set; }
 
     }
+
+    public class CarViewModel
+    {
+        public Car Car { get; set; }
+        public string recall { get; set; }
+        public string imageurl { get; set; }
+    }
 }

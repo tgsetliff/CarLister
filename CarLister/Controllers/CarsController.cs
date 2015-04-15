@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Threading.Tasks;
 using CarLister.Models.Data_Interfaces;
+using CarLister.Models;
+using Bing;
 
 namespace CarLister.Controllers
 {
@@ -52,28 +54,62 @@ namespace CarLister.Controllers
         {
             return Ok(await db.GetCars(year, make, model, trim));
         }
-
-        [HttpGet, HttpPost, Route("getRecall")]
-        public async Task<IHttpActionResult> getRecall(string year, string make, string model)
+        
+        [HttpGet, HttpPost, Route("getCar")]
+        public async Task<IHttpActionResult> getCar( int id)
         {
             HttpResponseMessage response;
             string content = "";
+
+            var car = new CarViewModel
+            {
+                Car = await (db.GetCar(id)),
+                recall = "",
+                imageurl = ""
+            };
+
+            // get car recall data
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://www.nhtsa.gov/");
                 try
                 {
-                    response = await client.GetAsync("webapi/api/recalls/vehicle/modelyear/" + year + "/make/" + make + "/model/" + model + "?format=json");
+                    response = await client.GetAsync("webapi/api/recalls/vehicle/modelyear/" + car.Car.year + "/make/" + car.Car.make + "/model/" + car.Car.model + "?format=json");
                     content = await response.Content.ReadAsStringAsync();
+                    
                 }
                 catch (Exception e)
                 {
                     return InternalServerError(e);
                 }
-            }
-            return Ok(content);
 
+                car.recall = content;
+
+                var image = new BingSearchContainer(new Uri("https://api.datamarket.azure.com/Bing/search/"));
+                image.Credentials = new NetworkCredential("accountKey", "JUc6xnb5P167bvXPUJE8zHrTuIXZdTgLMy4Wk5NGx98");
+                var marketData = image.Composite(
+	                "image",
+	                car.Car.year + " " + car.Car.make + " " + car.Car.model + " " + car.Car.trim,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null,
+	                null
+	                ).Execute();
+
+                car.imageurl = marketData.First().Image.First().MediaUrl;
+                }
+
+            return Ok(car);
         }
     }
 }

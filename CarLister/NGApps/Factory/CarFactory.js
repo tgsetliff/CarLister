@@ -40,12 +40,20 @@
                 .then(function (response) { return response.data });
         };
 
-        carFactory.getRecall = function (year, make, model) {
-            var options = { params: { year: year, make: make, model: model } }
+        // get car by id
+        carFactory.getCar = function (id) {
+            var options = { params: { id: id } };
 
-            return $http.get('api/cars/getRecall',options)
-                .then(function (response) {return JSON.parse(response.data)});
-        }
+            return $http.get('api/cars/getCar', options)
+                .then(function (response) { return response.data });
+        };
+        
+        //carFactory.getRecall = function (year, make, model) {
+        //    var options = { params: { year: year, make: make, model: model } }
+
+        //    return $http.get('api/cars/getRecall',options)
+        //        .then(function (response) {return JSON.parse(response.data)});
+        //}
 
         return carFactory;
     }]);
