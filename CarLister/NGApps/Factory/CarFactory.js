@@ -45,7 +45,10 @@
             var options = { params: { id: id } };
 
             return $http.get('api/cars/getCar', options)
-                .then(function (response) { return response.data });
+                .then(function (response) {
+                    response.data.recall = JSON.parse(response.data.recall)
+                    return response.data
+                });
         };
         
         //carFactory.getRecall = function (year, make, model) {

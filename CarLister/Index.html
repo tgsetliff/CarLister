@@ -24,6 +24,72 @@
                     </ul>
                 </div>
             </nav>
+            <script type="text/ng-template" id="detailsModal.html">               
+                <div class="modal-header">
+                    <img ng-src="{{car.imageurl}}" class="img-responsive" />
+                    {{car.Car.year}}  {{car.Car.make | uppercase}}  {{car.Car.model | uppercase}} {{car.Car.trim | uppercase}}                   
+                </div>
+                <div class="modal-body">
+                    <tabset justified="true">
+                       <tab heading="Details">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <b>Seats:</b> {{car.Car.seats}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>Doors:</b> {{car.Car.doors}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>Transmission:</b> {{car.Car.transmission_type}}
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <b>Wheelbase:</b> {{car.Car.wheelbase}}  
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>Drive Type</b> {{car.Car.drive_type}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>Engine CC:</b> {{car.Car.engine_cc}}
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <b>Engine Cylinders:</b> {{car.Car.engine_num_cyl}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>Engine Type:</b> {{car.Car.engine_type}} 
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>Valves per Cyl.:</b> {{car.Car.engine_valves_per_cyl}}
+                                    </div>
+                                </div>
+                            </div>
+                         </tab>
+                        <tab heading="Recall Data">
+                            <div ng-repeat="result in car.recall.Results">
+                                <div class="row">
+                                    <b>Component: </b>{{result.Component}}
+                                </div>
+                                <div class="row">
+                                    <b>Summary: </b>{{result.Summary}}
+                                </div>
+                                <div class="row">
+                                    <b>Consequence: </b>{{result.Conequence}}
+                                </div>
+                                <div class="row">
+                                    <b>Remedy: </b>{{result.Remedy}}
+                                </div>
+                            </div>                            
+                        </tab>                      
+                    </tabset>                    
+              </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="ok()">OK</button>
+                </div>
+            </script>
             <div class="col-md-12">
                 <div class="row">
                     <div class="text-center">
@@ -66,76 +132,42 @@
                     <div class="row">
                         <div class="panel">
                             <div class="panel-body">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Year</th>
-                                            <th>Make</th>
-                                            <th>Model</th>
-                                            <th>Trim</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="car in cars">
-                                            <td>{{ car.year }}</td>
-                                            <td>{{ car.make | uppercase}}</td>
-                                            <td>{{ car.model | uppercase}}</td>
-                                            <td>{{ car.trim | uppercase}}</td>
-                                            <td><btn class="btn btn-xs pull-right" ng-click="getCar(car.id)">
-                                                    <i class="glyphicon-plus-sign"></i>
-                                                </btn></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <!--<div class="row" ng-repeat="car in cars">
-                                    <div class="col-md-3">{{ car.year }}</div>
-                                    <div class="col-md-3">{{ car.make }}</div>
-                                    <div class="col-md-3">{{ car.model }}</div>
-                                    <div class="col-md-3">{{ car.trim }}</div>
-                                    <btn class="btn btn-success btn-xs pull-right" ng-click="getRecall()">Details</btn>                                    
-                                    <br />
-                                </div>-->
-                                <!--<btn class="btn btn-success btn-xs pull-right" ng-click="getRecall()">Recall Data</btn>-->
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Year</th>
+                                                <th>Make</th>
+                                                <th>Model</th>
+                                                <th>Trim</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="car in cars">
+                                                <td>{{ car.year }}</td>
+                                                <td">{{ car.make | uppercase}}</td>
+                                                <td>{{ car.model | uppercase}}</td>
+                                                <td>{{ car.trim | uppercase}}</td>
+                                                <td>
+                                                    <btn class="btn btn-xs pull-right" ng-click="open(car.id)">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </btn>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                
                             </div>
-                             <div class="panel-footer" ng-repeat="recall in recalls.Results">
-                                 <div class="row">
-                                    <b>Component: </b>{{recall.Component}}
-                                </div>
-                                <div class="row">
-                                    <b>Summary: </b>{{recall.Summary}}
-                                </div>
-                                <div class="row">
-                                    <b>Consequence: </b>{{recall.Conequence}}
-                                </div>
-                                <div class="row">
-                                    <b>Remedy: </b>{{recall.Remedy}}
-                                </div>
-                            </div>         
-                            <!--<div class="panel-footer" ng-repeat="recall in recalls.Results">
-                                <div class="row">
-                                    <b>Component: </b>{{recall.Component}}
-                                </div>
-                                <div class="row">
-                                    <b>Summary: </b>{{recall.Summary}}
-                                </div>
-                                <div class="row">
-                                    <b>Consequence: </b>{{recall.Conequence}}
-                                </div>
-                                <div class="row">
-                                    <b>Remedy: </b>{{recall.Remedy}}
-                                </div>
-                            </div>-->                              
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <!--<div class="footer"> 
             <div class="container">
                 <p>&copy;  - Car Search by Tom Setliff</p>
             </div>            
         </div>-->
-    </div>
     
     <script src="Scripts/jquery-2.1.3.min.js"></script>
     <script src="Scripts/angular.min.js"></script>

@@ -1,5 +1,5 @@
 ﻿angular.module('cars')
-    .controller('CarsController', ['$scope', 'carFactory', function ($scope, carFactory) {
+    .controller('CarsController', ['$scope', 'carFactory', '$modal', '$log', function ($scope, carFactory,$modal, $log) {
 
         //initialize
         $scope.selectedYear = '';
@@ -69,12 +69,50 @@
             carFactory.getCars($scope.selectedYear, $scope.selectedMake, $scope.selectedModel, $scope.selectedTrim).then(function (data) { $scope.cars = data; });            
         };
         
+        // call stored procedure to get car by id
         $scope.getCar = function () {
-            
-            // call stored procedure to get car by id
             carFactory.getCar($scope.id).then(function (data) { $scope.car = data; });
+            Console.log($scope.car.recall);
         };
 
-        // get years
+
+        // modal handling
+        $scope.open = function (id) {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'detailsModal.html',
+                controller: 'ModalInstanceCtrl',
+                size: 'lg',
+                resolve: {
+                    car: function () {
+                        return carFactory.getCar(id);
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        // inital load for years
         $scope.getYears();
     }]);
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
+angular.module('cars').controller('ModalInstanceCtrl', function ($scope, $modalInstance, car) {
+
+    $scope.car = car;
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});

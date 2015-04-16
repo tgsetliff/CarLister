@@ -56,7 +56,7 @@ namespace CarLister.Controllers
         }
         
         [HttpGet, HttpPost, Route("getCar")]
-        public async Task<IHttpActionResult> getCar( int id)
+        public async Task<IHttpActionResult> GetCar( int id)
         {
             HttpResponseMessage response;
             string content = "";
@@ -83,7 +83,7 @@ namespace CarLister.Controllers
                 {
                     return InternalServerError(e);
                 }
-
+                
                 car.recall = content;
 
                 var image = new BingSearchContainer(new Uri("https://api.datamarket.azure.com/Bing/search/"));
