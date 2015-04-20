@@ -72,12 +72,12 @@
         // call stored procedure to get car by id
         $scope.getCar = function () {
             carFactory.getCar($scope.id).then(function (data) { $scope.car = data; });
-            Console.log($scope.car.recall);
         };
 
 
         // modal handling
-        $scope.open = function (id) {
+        $scope.open = function (id) 
+        {
 
             var modalInstance = $modal.open({
                 templateUrl: 'detailsModal.html',
@@ -96,7 +96,8 @@
                 $log.info('Modal dismissed at: ' + new Date());
             });
         };
-
+           
+        
         // inital load for years
         $scope.getYears();
     }]);
@@ -107,6 +108,21 @@
 angular.module('cars').controller('ModalInstanceCtrl', function ($scope, $modalInstance, car) {
 
     $scope.car = car;
+    $scope.arrRecall = car.recall.Results;
+    console.log($scope.arrRecall);
+    $scope.curPage = 1;
+    $scope.pageSize = 1;
+    $scope.index = 0;
+
+    $scope.next = function () {
+        $scope.curPage = $scope.curPage + 1;
+        $scope.index = $scope.index + 1;
+    };
+
+    $scope.prev = function () {
+        $scope.curPage = $scope.curPage - 1;
+        $scope.index = $scope.index - 1;
+    };
 
     $scope.ok = function () {
         $modalInstance.close();

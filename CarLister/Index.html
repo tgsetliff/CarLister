@@ -27,62 +27,87 @@
             <script type="text/ng-template" id="detailsModal.html">               
                 <div class="modal-header">
                     <img ng-src="{{car.imageurl}}" class="img-responsive" />
-                    {{car.Car.year}}  {{car.Car.make | uppercase}}  {{car.Car.model | uppercase}} {{car.Car.trim | uppercase}}                   
-                </div>
+                    <b>{{car.Car.year}}</b>  <b>{{car.Car.make | uppercase}}</b>  <b>{{car.Car.model | uppercase}}</b> <b>{{car.Car.trim | uppercase}}</b>
+</div>
                 <div class="modal-body">
                     <tabset justified="true">
                        <tab heading="Details">
-                            <div class="col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <b>Seats:</b> {{car.Car.seats}}
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <b>Doors:</b> {{car.Car.doors}}
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <b>Transmission:</b> {{car.Car.transmission_type}}
-                                    </div> 
+                        <div class="">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <b>Seats:</b> {{car.Car.seats}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <b>Wheelbase:</b> {{car.Car.wheelbase}}  
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <b>Drive Type</b> {{car.Car.drive_type}}
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <b>Engine CC:</b> {{car.Car.engine_cc}}
-                                    </div> 
+                                <div class="col-xs-4">
+                                    <b>Doors:</b> {{car.Car.doors}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <b>Engine Cylinders:</b> {{car.Car.engine_num_cyl}}
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <b>Engine Type:</b> {{car.Car.engine_type}} 
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <b>Valves per Cyl.:</b> {{car.Car.engine_valves_per_cyl}}
-                                    </div>
+                                <div class="col-xs-4">
+                                    <b>Transmission:</b> {{car.Car.transmission_type}}
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <b>Wheelbase:</b> {{car.Car.wheelbase}}  
+                                </div>
+                                <div class="col-xs-4">
+                                    <b>Drive Type</b> {{car.Car.drive_type}}
+                                </div>
+                                <div class="col-xs-4">
+                                    <b>Engine CC:</b> {{car.Car.engine_cc}}
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <b>Engine Cylinders:</b> {{car.Car.engine_num_cyl}}
+                                </div>
+                                <div class="col-xs-4">
+                                    <b>Engine Type:</b> {{car.Car.engine_type}} 
+                                </div>
+                                <div class="col-xs-4">
+                                    <b>Valves per Cyl.:</b> {{car.Car.engine_valves_per_cyl}}
                                 </div>
                             </div>
-                         </tab>
+                        </div>
+                            <div class="clearfix"></div>
+                       </tab>
                         <tab heading="Recall Data">
-                            <div ng-repeat="result in car.recall.Results">
+                            <div class="panel panel-body" ng-if="car.recall.Count > 0">
                                 <div class="row">
-                                    <b>Component: </b>{{result.Component}}
+                                    <b>Page: </b>{{curPage}}
                                 </div>
                                 <div class="row">
-                                    <b>Summary: </b>{{result.Summary}}
+                                    <b>Component: </b>{{arrRecall[index].Component}}
                                 </div>
                                 <div class="row">
-                                    <b>Consequence: </b>{{result.Conequence}}
+                                    <b>Summary: </b>{{arrRecall[index].Summary}}
                                 </div>
                                 <div class="row">
-                                    <b>Remedy: </b>{{result.Remedy}}
+                                    <b>Consequence: </b>{{arrRecall[index].Conequence}}
                                 </div>
-                            </div>                            
+                                <div class="row">
+                                    <b>Remedy: </b>{{arrRecall[index].Remedy}}
+                                </div>
+                            </div>
+                            <div class="panel panel-footer" ng-show="arrRecall.length">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 pull-left">
+                                            <button type="button" ng-disabled="curPage == 1"
+                                                    ng-click="prev()">
+                                                PREV
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 pull-right">
+                                            <button type="button" ng-disabled="curPage == arrRecall.length"
+                                                    ng-click="next()">
+                                                NEXT
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="panel panel-body" ng-if="car.recall.Count == 0">
+                                <h4>No recall data exists for this car</h4>
+                            </div>                    
                         </tab>                      
                     </tabset>                    
               </div>
@@ -144,7 +169,7 @@
                                         <tbody>
                                             <tr ng-repeat="car in cars">
                                                 <td>{{ car.year }}</td>
-                                                <td">{{ car.make | uppercase}}</td>
+                                                <td>{{ car.make | uppercase}}</td>
                                                 <td>{{ car.model | uppercase}}</td>
                                                 <td>{{ car.trim | uppercase}}</td>
                                                 <td>
