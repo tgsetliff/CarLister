@@ -1,5 +1,5 @@
 ﻿angular.module('cars')
-    .controller('CarsController', ['$scope', 'carFactory', '$modal', '$log', function ($scope, carFactory,$modal, $log) {
+    .controller('CarsController', ['$scope', 'carFactory', '$modal', 'uiGridConstants', '$log', function ($scope, carFactory,$modal, uiGridConstants, $log) {
 
         //initialize
         $scope.selectedYear = '';
@@ -66,7 +66,8 @@
 
         $scope.getCars = function () {
             // call stored procedure to get cars matching selected year, make, model and trim
-            carFactory.getCars($scope.selectedYear, $scope.selectedMake, $scope.selectedModel, $scope.selectedTrim).then(function (data) { $scope.cars = data; });            
+            carFactory.getCars($scope.selectedYear, $scope.selectedMake, $scope.selectedModel, $scope.selectedTrim).then(function (data) { $scope.cars = data; });
+            //console.log($scope.cars,$scope.gridOptions);
         };
         
         // call stored procedure to get car by id
@@ -74,30 +75,69 @@
             carFactory.getCar($scope.id).then(function (data) { $scope.car = data; });
         };
 
+        // click to show detail
+        $scope.gridFunctions = {
+            open: function (id) 
+            {
+                var modalInstance = $modal.open({
+                    templateUrl: 'detailsModal.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: 'lg',
+                    resolve: {
+                        car: function () {
+                            return carFactory.getCar(id);
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            }
+        };
 
         // modal handling
-        $scope.open = function (id) 
-        {
+        //$scope.open = function (id) 
+        //{
 
-            var modalInstance = $modal.open({
-                templateUrl: 'detailsModal.html',
-                controller: 'ModalInstanceCtrl',
-                size: 'lg',
-                resolve: {
-                    car: function () {
-                        return carFactory.getCar(id);
-                    }
-                }
-            });
+        //    var modalInstance = $modal.open({
+        //        templateUrl: 'detailsModal.html',
+        //        controller: 'ModalInstanceCtrl',
+        //        size: 'lg',
+        //        resolve: {
+        //            car: function () {
+        //                return carFactory.getCar(id);
+        //            }
+        //        }
+        //    });
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
+        //    modalInstance.result.then(function (selectedItem) {
+        //        $scope.selected = selectedItem;
+        //    }, function () {
+        //        $log.info('Modal dismissed at: ' + new Date());
+        //    });
+        //};
            
-        
+        // define grid
+        $scope.gridOptions = {
+            data: 'cars',
+            paginationPageSizes: [25, 50, 75],
+            paginationPageSize: 25,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            columnDefs: [{ field: 'year', displayName: 'Year', width: 265 },
+                         { field: 'make', displayName: 'Make', width: 265 },
+                         { field: 'model', displayName: 'Model', width: 265 },
+                         { field: 'trim', displayName: 'Trim', width: 265 },
+                         {
+                             name: 'Details',
+                             cellTemplate: '<btn class="btn btn-xs center" ng-click=" getExternalScopes().open(row.entity.id)"><center><i class="glyphicon glyphicon-plus"></i></center></btn>'
+                         }
+            ]
+        };
+
         // inital load for years
         $scope.getYears();
     }]);
@@ -109,7 +149,6 @@ angular.module('cars').controller('ModalInstanceCtrl', function ($scope, $modalI
 
     $scope.car = car;
     $scope.arrRecall = car.recall.Results;
-    console.log($scope.arrRecall);
     $scope.curPage = 1;
     $scope.pageSize = 1;
     $scope.index = 0;

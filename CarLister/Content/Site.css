@@ -18,6 +18,20 @@ select,
 textarea {
     max-width: 280px;
 }
+h1 {
+display: inline;
+position: relative;
+font-size:48px;
+letter-spacing: -5px; /* This will push it together giving us a nice 3D vibe */
+color: rgba(0,0,255,0.5); /* This will give us a blue at 50% opacity */
+}
+
+h1:after {
+content: “Find Your Ride”;
+position: absolute;
+left: 8px; top: 6px; /* These are aligning it to be where we’d like relative to the last word */
+color: rgba (255,0,0,0.5); /* This gives us a red at 50% opacity */
+}
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 .container{
     padding:10px;
@@ -278,4 +292,12 @@ table th[class*="col-"] {
 }
 .glyphicon-plus:before {
   content: "\2b";
+}
+.neon {
+   color: #19D0F0;
+   text-shadow: 0 1px 0 #999999, 0 2px 0 #888888,
+           0 3px 0 #777777, 0 4px 0 #666666,
+           0 5px 0 #555555, 0 6px 0 #444444,
+           0 7px 0 #333333, 0 8px 7px rgba(0, 0, 0, 0.4),
+           0 9px 10px rgba(0, 0, 0, 0.2);
 }

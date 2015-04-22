@@ -236,8 +236,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ui-grid-unstable.css" />
+    <Content Include="Content\ui-grid-unstable.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\ui-grid.svg" />
     <Content Include="Global.asax" />
     <Content Include="Icon.png" />
     <Content Include="Images\cars.jpg" />
@@ -1056,6 +1059,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\ui-grid.woff" />
+    <Content Include="fonts\ui-grid.ttf" />
+    <Content Include="fonts\ui-grid.eot" />
     <None Include="Properties\PublishProfiles\setlifft-carfinder - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\setlifft-carfinder - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
@@ -1072,6 +1078,8 @@
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-grid-unstable.js" />
+    <Content Include="Scripts\ui-grid-unstable.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
