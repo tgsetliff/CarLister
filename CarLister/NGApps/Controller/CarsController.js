@@ -99,10 +99,10 @@
             paginationPageSize: 10,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
             enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
-            columnDefs: [{ field: 'year',  width: 269 },
-                         { field: 'make',  width: 269 },
-                         { field: 'model',  width: 269 },
-                         { field: 'trim',  width: 269 },
+            columnDefs: [{ field: 'year',  width: 255 },
+                         { field: 'make',  width: 265 },
+                         { field: 'model',  width: 265 },
+                         { field: 'trim',  width: 265 },
                          {
                              name: 'Details',
                              cellTemplate: '<btn class="btn" ng-click=" getExternalScopes().open(row.entity.id)"><i class="glyphicon glyphicon-plus"></i></btn>'
