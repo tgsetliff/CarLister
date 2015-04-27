@@ -262,6 +262,7 @@ table th[class*="col-"] {
     margin-top:0px;
     border: 1px solid rgb(232, 217, 186);
     background-color: rgb(241, 226, 195);
+    height:auto;
            }
 .footer {
 	width:100%;
@@ -295,7 +296,7 @@ table th[class*="col-"] {
   content: "\2b";
 }
 .neon {
-   color: #19D0F0;
+   color: #4F4D62;
    text-shadow: 0 1px 0 #999999, 0 2px 0 #888888,
            0 3px 0 #777777, 0 4px 0 #666666,
            0 5px 0 #555555, 0 6px 0 #444444,

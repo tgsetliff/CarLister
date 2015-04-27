@@ -75,7 +75,7 @@
             carFactory.getCar($scope.id).then(function (data) { $scope.car = data; });
         };
 
-        // click to show detail
+        // click to open modal and show car detail
         $scope.gridFunctions = {
             open: function (id) 
             {
@@ -89,13 +89,25 @@
                         }
                     }
                 });
-
-                modalInstance.result.then(function (selectedItem) {
-                    $scope.selected = selectedItem;
-                }, function () {
-                    $log.info('Modal dismissed at: ' + new Date());
-                });
             }
+        };
+
+        // define grid
+        $scope.gridOptions = {
+            data: 'cars',
+            paginationPageSizes: [10, 25, 50],
+            paginationPageSize: 10,
+            enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+            columnDefs: [{ field: 'year',  width: 269 },
+                         { field: 'make',  width: 269 },
+                         { field: 'model',  width: 269 },
+                         { field: 'trim',  width: 269 },
+                         {
+                             name: 'Details',
+                             cellTemplate: '<btn class="btn" ng-click=" getExternalScopes().open(row.entity.id)"><i class="glyphicon glyphicon-plus"></i></btn>'
+                         }
+            ]
         };
 
         // modal handling
@@ -119,24 +131,6 @@
         //        $log.info('Modal dismissed at: ' + new Date());
         //    });
         //};
-           
-        // define grid
-        $scope.gridOptions = {
-            data: 'cars',
-            paginationPageSizes: [25, 50, 75],
-            paginationPageSize: 25,
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 0,
-            columnDefs: [{ field: 'year', displayName: 'Year', width: 265 },
-                         { field: 'make', displayName: 'Make', width: 265 },
-                         { field: 'model', displayName: 'Model', width: 265 },
-                         { field: 'trim', displayName: 'Trim', width: 265 },
-                         {
-                             name: 'Details',
-                             cellTemplate: '<btn class="btn btn-xs center" ng-click=" getExternalScopes().open(row.entity.id)"><center><i class="glyphicon glyphicon-plus"></i></center></btn>'
-                         }
-            ]
-        };
 
         // inital load for years
         $scope.getYears();

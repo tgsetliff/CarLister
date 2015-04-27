@@ -29,7 +29,7 @@
                 <div class="modal-header">
                     <img ng-src="{{car.imageurl}}" class="img-responsive" />
                     <b>{{car.Car.year}}</b>  <b>{{car.Car.make | uppercase}}</b>  <b>{{car.Car.model | uppercase}}</b> <b>{{car.Car.trim | uppercase}}</b>
-</div>
+                </div>
                 <div class="modal-body">
                     <tabset justified="true">
                        <tab heading="Details">
@@ -160,13 +160,13 @@
                         <div class="panel">
                             <div class="panel-body">   
                                 <div ui-grid="gridOptions" ui-grid-pagination external-scopes="gridFunctions" class="myGrid"></div>                                                          
-                                </div>                                
-                            </div>
+                            </div>                                
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
         
         <!--<div class="footer"> 
             <div class="container">
@@ -178,11 +178,11 @@
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
-    
+    <script src="Scripts/ui-grid-unstable.js"></script>
     <script src="NGApps/Module/CarsApp.js"></script>
     <script src="NGApps/Factory/CarFactory.js"></script>
     <script src="NGApps/Controller/CarsController.js"></script>
-    <script src="Scripts/ui-grid-unstable.js"></script>
+    
 
 </body>
 
