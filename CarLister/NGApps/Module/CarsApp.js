@@ -1,1 +1,1 @@
-﻿angular.module('cars', ['ui.bootstrap', 'ui.grid', 'ui.grid.pagination' ]);
+﻿angular.module('cars', ['ui.bootstrap', 'ui.grid', 'ui.grid.pagination', 'ui.grid.autoResize']);

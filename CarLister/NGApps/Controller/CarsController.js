@@ -95,6 +95,8 @@
         // define grid
         $scope.gridOptions = {
             data: 'cars',
+            rowHeight: 30,
+            headerHeight: 30,
             paginationPageSizes: [10, 25, 50],
             paginationPageSize: 10,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
@@ -110,27 +112,14 @@
             ]
         };
 
-        // modal handling
-        //$scope.open = function (id) 
-        //{
-
-        //    var modalInstance = $modal.open({
-        //        templateUrl: 'detailsModal.html',
-        //        controller: 'ModalInstanceCtrl',
-        //        size: 'lg',
-        //        resolve: {
-        //            car: function () {
-        //                return carFactory.getCar(id);
-        //            }
-        //        }
-        //    });
-
-        //    modalInstance.result.then(function (selectedItem) {
-        //        $scope.selected = selectedItem;
-        //    }, function () {
-        //        $log.info('Modal dismissed at: ' + new Date());
-        //    });
-        //};
+        // adjust table height based on number of rows
+        $scope.getTableHeight = function () {
+            var rowHeight = 40 // your row height
+            var headerHeight = 30 // your header height
+            return {
+                height: ($scope.paginationPageSize * rowHeight + headerHeight) + "px"
+            };
+        };
 
         // inital load for years
         $scope.getYears();
